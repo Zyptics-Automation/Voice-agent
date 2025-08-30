@@ -14,6 +14,7 @@ from knowledge import get_knowledge_base
 from services.booking import create_google_calendar_event
 from services.leads import save_lead_to_sheet  # Import the new lead-saving function
 from services.call_logging import log_call_to_sheet
+from services.reminders import send_booking_confirmation, schedule_appointment_reminder
 
 # Load API keys from .env file
 load_dotenv(".env")
@@ -137,8 +138,8 @@ class ZypticsAssistant(Agent):
             )
         )
 
-        @function_tool()
-        async def save_contact_info(
+    @function_tool()
+    async def save_contact_info(
             self,
             context: RunContext,
             name: str,
@@ -318,6 +319,7 @@ class ZypticsAssistant(Agent):
             # Fallback response to prevent getting stuck
             return "Let me check our availability... I have tomorrow at two P.M. or Thursday at ten A.M. available. Which works better for you?"
 
+
     @function_tool()
     async def create_calendar_event(
         self,
@@ -347,6 +349,76 @@ class ZypticsAssistant(Agent):
         print
         return result
 
+    @function_tool()
+    async def finalize_booking(
+        self,
+        context: RunContext,
+        summary: str,
+        start_time: str,
+        end_time: str,
+        recipient_name: str,
+        recipient_phone: str,
+        recipient_email: str,
+        reminder_preference: str, # Should be 'email', 'sms', 'both', or 'none'
+        description: str = ""
+    ) -> str:
+            """
+            Use this as the final step to book an appointment in Google Calendar, send a confirmation,
+            and schedule a reminder based on the user's preference.
+            
+            Args:
+                summary: The title or summary of the event.
+                start_time: The start time in ISO 8601 format (e.g., 2025-08-29T14:00:00).
+                end_time: The end time in ISO 8601 format (e.g., 2025-08-29T15:00:00).
+                recipient_name: The full name of the person attending.
+                recipient_phone: The phone number of the person attending.
+                recipient_email: The email address of the person attending.
+                reminder_preference: How the user wants to be reminded ('email', 'sms', 'both', or 'none').
+                description: A brief description of the event (optional).
+            """
+            print(f"[Debug] Finalizing booking: Summary='{summary}', Start='{start_time}', Preference='{reminder_preference}'")
+
+            # Step 1: Create the calendar event
+            event_description = f"{description}\n\nAttendee: {recipient_name}\nPhone: {recipient_phone}\nEmail: {recipient_email}"
+            event_result = await create_google_calendar_event(
+                summary=summary,
+                start_time=start_time,
+                end_time=end_time,
+                description=event_description
+            )
+
+            # If calendar booking fails, stop here and report the error.
+            if "Successfully booked" not in event_result:
+                print(f"[Error] Calendar event creation failed: {event_result}")
+                return "I'm sorry, I wasn't able to book that appointment. There seems to be a technical issue."
+
+            # The appointment time is needed as a datetime object for the next steps
+            try:
+                appointment_time_dt = datetime.fromisoformat(start_time)
+            except ValueError:
+                print(f"[Error] Could not parse start_time: {start_time}")
+                # Still return a success message as the core task (booking) was done
+                return "The appointment was booked, but I had a slight issue sending the confirmation."
+
+            # Step 2: Send the booking confirmation
+            await send_booking_confirmation(
+                recipient_phone=recipient_phone,
+                recipient_email=recipient_email,
+                appointment_time=appointment_time_dt,
+                summary=summary
+            )
+
+            # Step 3: Schedule a reminder if requested
+            if reminder_preference.lower() in ['email', 'sms', 'both']:
+                await schedule_appointment_reminder(
+                    recipient_phone=recipient_phone,
+                    recipient_email=recipient_email,
+                    appointment_time=appointment_time_dt,
+                    contact_preference=reminder_preference
+                )
+                return f"Alright, it's all set. I've booked '{summary}' for you and sent a confirmation. I'll also send you a reminder via {reminder_preference} 24 hours beforehand."
+            
+            return f"Alright, it's all set. I've booked '{summary}' for you and sent a confirmation."
 
 # --- AGENT ENTRYPOINT ---
 async def entrypoint(ctx: JobContext):
