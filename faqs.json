@@ -1,0 +1,78 @@
+[
+  {
+    "question": "Who is Zyptics?",
+    "answer": "Zyptics is a team of AI experts, engineers, and business strategists focused on building intelligent automation solutions."
+  },
+  {
+    "question": "What is Zyptics' mission?",
+    "answer": "Our mission is to democratize AI automation by delivering measurable ROI within 90 days, while maintaining a strong focus on security and compliance."
+  },
+  {
+    "question": "How do you build your solutions?",
+    "answer": "Every automation we build is fully custom-coded using powerful libraries, APIs, and frameworks. We don't use click-and-drop builders, ensuring each solution is tailored specifically to your business."
+  },
+  {
+    "question": "How do I get started with Zyptics?",
+    "answer": "Once you purchase a subscription, you'll receive a secure account activation link via email to get started. Our team then begins setting up your personalized dashboard."
+  },
+  {
+    "question": "How long does initial setup take?",
+    "answer": "Initial setup is typically within 24-72 hours. After purchasing a plan, your custom dashboard will be ready in 2 to 7 business days, depending on complexity."
+  },
+  {
+    "question": "Why does my dashboard look empty at first?",
+    "answer": "Don't worry if your dashboard is empty initially. We need a little time to personalize it specifically for your business. Once set up, you'll see all your custom workflows and tools."
+  },
+  {
+    "question": "What services does Zyptics offer?",
+    "answer": "Our core AI automation offerings include AI Chatbots & Virtual Assistants, Automated Ticket Routing, and Voice Response Systems."
+  },
+  {
+    "question": "What are the benefits of your AI automation?",
+    "answer": "Our services can save over 40 hours per week, potentially increase revenue by 30%, come with a 99.9% uptime guarantee, and improve customer satisfaction."
+  },
+  {
+    "question": "What subscription plans do you offer?",
+    "answer": "We offer Starter (€199/mo), Growth (€499/mo), Business (€999/mo), and custom Enterprise plans (from €1,999/mo)."
+  },
+  {
+    "question": "Can I change my subscription plan?",
+    "answer": "Yes, you can upgrade or downgrade your plan anytime with no hassle. Changes take effect immediately with prorated billing."
+  },
+  {
+    "question": "What happens if I go over my workflow limit?",
+    "answer": "We monitor your workflow usage and will notify you if you approach your limit. You can then upgrade your plan or discuss custom pricing for more workflows."
+  },
+  {
+    "question": "Are there setup fees?",
+    "answer": "No, all plans come with free onboarding and setup assistance."
+  },
+  {
+    "question": "Why should I choose a subscription?",
+    "answer": "Subscriptions offer continuous value through updates, dedicated support, and scalability. They also have a lower upfront cost and yearly plans offer significant discounts."
+  },
+  {
+    "question": "Do you offer services without a subscription?",
+    "answer": "Yes, we offer one-time integrations for specific solutions like Automated Ticket Routing (€600), AI Chatbots (€1,200), and Voice Response Systems (€1,600), among others."
+  },
+  {
+    "question": "How can I contact support?",
+    "answer": "You can reach our human support team by emailing info@zyptics.com or using the live chat on our website."
+  },
+  {
+    "question": "What are your support hours?",
+    "answer": "We are available Monday–Friday, from 9am to 6pm CET."
+  },
+  {
+    "question": "I can't log in, what should I do?",
+    "answer": "First, make sure you're using the email you signed up with. If you need to reset your password, just enter your email on the login page to receive a reset link. If you're still stuck, we can connect you to a human agent."
+  },
+  {
+    "question": "What payment methods do you accept?",
+    "answer": "We accept major credit/debit cards, cryptocurrencies, and ACH payments, all securely processed through Stripe."
+  },
+  {
+    "question": "How do you handle data and privacy?",
+    "answer": "Your data security is our priority. We follow strict security protocols, never sell or share your data, and all automations are built with GDPR compliance and enterprise-grade encryption."
+  }
+]
